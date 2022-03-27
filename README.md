@@ -1,4 +1,4 @@
-## ♻ Spring-Data-Elasticsearch
+## 📲 Restful web service
 
 ### 1. 요약(Summary)
 
