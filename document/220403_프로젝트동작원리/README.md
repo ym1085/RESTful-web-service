@@ -101,3 +101,11 @@ public class HelloWorldBean {
 
 - 가변 변수를 URI에 사용하는 경우 @PathVariable을 사용한다.
 - 기존 Spring MVC에서부터 사용이 되던 기술이다.
+
+## User Service API 추가
+
+- User Domain 생성
+- GET
+- POST
+- Exception Handling
+- DELETE
