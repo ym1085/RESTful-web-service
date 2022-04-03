@@ -1,6 +1,7 @@
 package com.restful.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,12 @@ public class HelloWorldController {
 
     @GetMapping(path = "/hello-world-bean")
     public HelloWorldBean helloWorldBean() {
-        return new HelloWorldBean("Hello World", new Date(), new Date());
+        return new HelloWorldBean("Hello World");
+    }
+
+    /* 22-04-03 19:39 @PathVariable */
+    @GetMapping(path = "/hello-world-bean/path-variable/{name}")
+    public HelloWorldBean helloWorldBean(@PathVariable String name) {
+        return new HelloWorldBean(String.format("Hello World, %s", name));
     }
 }
