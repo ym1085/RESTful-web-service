@@ -1,11 +1,8 @@
-package com.restful.web;
+package com.restful.web.helloworld;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @RestController
 public class HelloWorldController {
