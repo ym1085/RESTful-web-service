@@ -4,3 +4,6 @@ server:
 logging:
   level:
     org.springframework: DEBUG
+    com:
+      restful:
+        web: debug
