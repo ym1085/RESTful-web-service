@@ -6,7 +6,7 @@
 
 ## 01. User Service API 구현
 
-### ✅ ServletUriComponentsBuilder
+### 01-1. ServletUriComponentsBuilder
 
 - UriComponentsBuilder 클래스를 상속.
 - `이전 요청의 URI`를 `재사용`하여 보다 `편리하게 URI를 사용하기 위한 목적`.
@@ -38,7 +38,7 @@ public class UserController {
 
 - ServletUriComponentsBuilder 간단히 짚고 넘어가기.
 
-### ✅ HTTP Status Code Exception Handling
+### 01-2. HTTP Status Code Exception Handling
 
 ```java
 // AS-IS
@@ -108,7 +108,7 @@ public class UserNotFoundException extends RuntimeException {
 - @ResponseStatus(HttpStatus.NOT_FOUND)를 사용하여 요청에 맞는 응답 예외를 반환.
 - 서버 측 Error가 아니라, 사용자가 요청한 Resource 가 존재하지 않기에 404 Error 반환.
 
-### ✅ Exception Handling with AOP
+### 01-3. Exception Handling with AOP
 
 이번에는 글로벌 예외처리를 작성하기 위한 프로세스에 대해 간략히 알아보자.
 
@@ -188,13 +188,13 @@ public class GlobalExceptionHandler {
 
 - Response 값에 Trace log를 제외하고 보여줄 수 있음.
 
-## 03. 무분별한 커스텀 예외 정의의 단점
+## 02. 무분별한 커스텀 예외 정의의 단점
 
 > 참고 내용은 하단에 기재 해두었습니다.
 
 강의를 수강하는 중에 `Global 커스텀 예외를 정의하는 것이 과연 좋은가?` 에 대한 생각이 들어 글을 남겨둔다.  
 
-### ✅ 표준 예외를 사용하는것이 오히려 가독성에 좋을수도 있다?
+### 02-1. 표준 예외를 사용하는것이 오히려 가독성에 좋을수도 있다?
 
 > "자동차 이름의 글자 수가 유효하지 않은 경우를 표시하는 예외를 정의"
 
@@ -206,11 +206,11 @@ public class GlobalExceptionHandler {
   - IllegalStateException
   - NullPointerException
 
-### ✅ 비용 문제
+### 02-2. 비용 문제
 
 - 커스텀 예외 클래스가 너무 많으면 메모리 사용량이 늘고, 클래스 로딩 시간도 느려진다.
 
-### ✅ 표준 예외
+### 02-3. 표준 예외
 
 커스텀 예외 클래스가 나쁘다는 것은 아니다, 웬만한 부분은 표준 예외로 처리하고  
 `구체적인 처리가 필요한 경우`에는 커스텀 예외를 작성해 처리하자.
