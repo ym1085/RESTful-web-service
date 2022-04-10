@@ -59,7 +59,7 @@ DispatcherServlet란 서블릿 컨테이너에서 HTTP Protocol을 통해 들어
 
 ## RestController
 
-![RestController](./images/restcontroller.PNG)
+![RestController](./images/Restcontroller.PNG)
 
 > 반환값이 JSON인 경우 사용이 되는 @RestController
 
