@@ -1,4 +1,4 @@
-## 📲 Restful web service
+## Restful web service
 
 ### 1. 요약(Summary)
 
