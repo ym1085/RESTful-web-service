@@ -1,10 +1,10 @@
 ## RESTful web service
 
-### 1. 요약(Summary)
+### 1. 요약
 
-Spring Boot와 JPA를 이용하여 RESTful Web Services 개발하기 위한 개인 프로젝트.
+Spring Boot JPA를 이용하여 RESTful Web Services 개발하기 위한 개인 스터디 프로젝트입니다.
 
-### 2. 기술 스펙(Tech spec)
+### 2. 기술 스펙
 
 | Tech    | Version           |
 |---------|-------------------|
@@ -13,7 +13,7 @@ Spring Boot와 JPA를 이용하여 RESTful Web Services 개발하기 위한 개�
 | **DB**  | H2                |
 | **ORM** | Hibernate         |
 
-### 3. 정리(organize)
+### 3. 정리
 
 - [프로젝트동작원리](./document/20220403/프로젝트동작원리/README.md)
 - [HTTP Status Code 제어와 Exception Handling](./document/20220410/HTTP_제어/README.md)
