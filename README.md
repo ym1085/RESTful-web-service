@@ -2,7 +2,7 @@
 
 ### 1. 요약(Summary)
 
-Spring Boot를 JPA를 이용하여 RESTful Web Services 개발을 위한 개인 프로젝트 입니다.
+Spring Boot와 JPA를 이용하여 RESTful Web Services 개발하기 위한 개인 프로젝트.
 
 ### 2. 기술 스펙(Tech spec)
 
