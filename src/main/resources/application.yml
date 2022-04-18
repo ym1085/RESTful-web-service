@@ -7,3 +7,7 @@ logging:
     com:
       restful:
         web: debug
+
+spring:
+  messages:
+    basename: messages
