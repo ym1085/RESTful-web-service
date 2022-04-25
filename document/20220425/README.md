@@ -233,6 +233,104 @@ public class AdminUserController {
 - **MappingJacksonValue** 클래스를 사용하여 User 클래스를 Filter를 적용할 수 있는 타입으로 변경.
 - FilterProvider를 통해 @JsonFilter에서 지정한 id 값, 생성한 Filter를 매개변수로 하여 우리가 사용할 수 있는 필터로 변경.
 
+## 04. URI를 이용한 REST API Version 관리
+
+### 04-1. 버전 관리
+
+```http request
+https://developers.facebook.com/docs/apps/versions
+https://developers.kakao.com/docs/restapi/kakaotalk-api
+```
+
+- 공개 API 사용 시 사용되는 URI
+
+```java
+// AS-IS
+@GetMapping("/admin/user/{id}")
+public MappingJacksonValue retrieveUserAdmin() { 
+    ...
+}
+```
+
+```java
+// TO-BE
+@GetMapping("/v1/admin/user/{id}")
+public MappingJacksonValue retrieveUserAdmin() { 
+    ...
+}
+```
+
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonFilter("UserInfo")
+public class UserV2 extends User {
+    private String grade;
+}
+```
+
+- UserV2는 User를 상속한다
+
+```java
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/admin")
+public class AdminController {
+    private final Logger log = LoggerFactory.getLogger(AdminController.class);
+    
+    @GetMapping("/v1/user/{id}")
+    public MappingJacksonValue findByIdV1(@PathVariable("id") String id) {
+        log.debug("v1 => id = {}", id);
+        User user = userService.findById(id);
+        if (user == null) {
+          throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+  
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "userName");
+        SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+  
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+        return mapping;
+    }
+}
+```
+
+```java
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/admin")
+public class AdminController {
+    //...
+    
+    @GetMapping("/v2/user/{id}")
+    public MappingJacksonValue findByIdV2(@PathVariable int id) {
+        log.debug("v2 => id = {}", id);
+        User user = userService.findById(id);
+        if (user == null) {
+          throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+    
+        // User -> User2
+        UserV2 userV2 = new UserV2();
+        BeanUtils.copyProperties(user, userV2);
+        userV2.setGrade("VIP");
+    
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "userName", "joinDate", "grade");
+    
+        SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("UserInfoV2", filter);
+    
+        MappingJacksonValue mapping = new MappingJacksonValue(userV2);
+        mapping.setFilters(filters);
+        return mapping;
+    }
+}
+```
+
+- BeanUtils.copyProperties 이용하여 원복 객체(User)를 복사한다.
+
 ### 참고 자료
 
 - https://www.inflearn.com/course/spring-boot-restful-web-services/lecture/39102?tab=curriculum&volume=1.00&quality=1080
