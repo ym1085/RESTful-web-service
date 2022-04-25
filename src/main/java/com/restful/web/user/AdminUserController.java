@@ -37,7 +37,10 @@ public class AdminUserController {
         return mapping;
     }
 
-    @GetMapping("/v1/user/{id}")
+//    @GetMapping("/v1/user/{id}")
+//    @GetMapping(value = "/user/{id}/", params = "version=1")
+//    @GetMapping(value = "/user/{id}", headers = "X-API-VERSION=1")
+    @GetMapping(value = "/user/{id}", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue findByIdV1(@PathVariable int id) {
         log.debug("v1 => id = {}", id);
         User user = userService.findById(id);
@@ -53,7 +56,10 @@ public class AdminUserController {
         return mapping;
     }
 
-    @GetMapping("/v2/user/{id}")
+//    @GetMapping("/v2/user/{id}")
+//    @GetMapping(value = "/user/{id}/", params = "version=2")
+//    @GetMapping(value = "/user/{id}", headers = "X-API-VERSION=2")
+    @GetMapping(value = "/user/{id}", produces = "application/vnd.company.appv2+json")
     public MappingJacksonValue findByIdV2(@PathVariable int id) {
         log.debug("v2 => id = {}", id);
         User user = userService.findById(id);

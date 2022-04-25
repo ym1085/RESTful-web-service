@@ -331,7 +331,17 @@ public class AdminController {
 
 - BeanUtils.copyProperties 이용하여 원복 객체(User)를 복사한다.
 
-### 참고 자료
+### 05. API 버전 생성
 
-- https://www.inflearn.com/course/spring-boot-restful-web-services/lecture/39102?tab=curriculum&volume=1.00&quality=1080
-- https://jy-beak.tistory.com/123?category=980784
+```java
+@GetMapping("/v2/user/{id}")
+@GetMapping(value = "/user/{id}/", params = "version=2")
+@GetMapping(value = "/user/{id}", headers = "X-API-VERSION=2")
+@GetMapping(value = "/user/{id}", produces = "application/vnd.company.appv2+json")
+```
+
+- 기본
+- 파라미터
+- **헤더**
+- **MIME**
+  - 헤더, MIME 타입은 일반 브라우저에서 실행이 불가능 할수도 있다.
