@@ -46,9 +46,9 @@ public class UserService {
 
     // static 초기화 블럭에서, 생성자 필드 2개를 추가 한다
     static {
-        userList.add(new User(1, "Kenneth", new Date(), "pass1", "930823-1065627"));
-        userList.add(new User(2, "Alice", new Date(), "pass2", "910924-1065628"));
-        userList.add(new User(3, "Elena", new Date(), "pass3", "680864-1065627"));
+        userList.add(new User(1, "Kenneth", new Date(), "pass1", "535353-1122334"));
+        userList.add(new User(2, "Alice", new Date(), "pass2", "232323-2233445"));
+        userList.add(new User(3, "Elena", new Date(), "pass3", "343434-4242424"));
     }
 
     public List<User> findAll() {
