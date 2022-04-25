@@ -140,7 +140,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 ```java
 @RestController
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 공통 예외 처리 클래스
     @ExceptionHandler(Exception.class)
