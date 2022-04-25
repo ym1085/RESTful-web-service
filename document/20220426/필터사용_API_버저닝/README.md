@@ -167,7 +167,7 @@ private String ssn;
 
 ## 03. Filtering 방법 - 개별 사용자 조회
 
-사용자에 따른 json 형태로 데이터를 보내고자 할 때 보내지 안항도 되는 데이터는 필터링 하여 보내고 싶은 경우 사용
+사용자에 따른 json 형태로 데이터를 보내고자 할 때 보내지 않아도 되는 데이터는 필터링 하여 보내고 싶은 경우 사용
 
 ```java
 @Data
@@ -208,7 +208,6 @@ public class AdminUserController {
 
     @GetMapping("/user/{id}")
     public MappingJacksonValue findById(@PathVariable int id) {
-        log.debug("");
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
@@ -229,9 +228,10 @@ public class AdminUserController {
 ```
 
 - **SimpleBeanPropertyFilter**
-    - 지정된 필드드만 **JSON**으로 변환, 알 수 없는 필드는 무시
+    - 지정된 필드만 **JSON**으로 변환, 알 수 없는 필드는 무시
 - **MappingJacksonValue** 클래스를 사용하여 User 클래스를 Filter를 적용할 수 있는 타입으로 변경
 - FilterProvider를 통해 @JsonFilter에서 지정한 id 값, 생성한 Filter를 매개변수로 하여 우리가 사용할 수 있는 필터로 변경
+- 위와 같이 지정하면, 제공하고 싶은 필드만 보여줄 수 있다
 
 ## 04. URI를 이용한 REST API Version 관리
 
