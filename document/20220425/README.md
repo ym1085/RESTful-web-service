@@ -167,3 +167,73 @@ private String ssn;
 
 ## 03. Filtering 방법 - 개별 사용자 조회
 
+사용자에 따른 json 형태로 데이터를 보내고자 할 때 보내지 안항도 되는 데이터는 필터링 하여 보내고 싶은 경우 사용.
+
+```java
+@Data
+@RequeiredArgsConstructor
+@NotArgsConstructor
+@JsonFilter("UserInfo")
+public class User {
+
+    private Integer id;
+  
+    @Size(min = 2, message = "Name은 2글자 이상 입력해주세요.")
+    private String userName;
+  
+    @Past
+    private Date joinDate;
+    
+    private String password;
+    private String ssn;
+}
+```
+
+- 위와 같이 @JsonFilter 어노테이션을 추가 해준다.
+- 후에 Filter를 등록할 때 해당 아이디 값으로 참조하여 사용.
+
+```java
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/admin")
+public class AdminUserController {
+    private final Logger log = LoggerFactory.getLogger(AdminUserController.class);
+
+    private final UserService userService;
+
+    @GetMapping("/user")
+    public List<User> findAll() {
+        return userService.findAll();
+    }
+
+    @GetMapping("/user/{id}")
+    public MappingJacksonValue findById(@PathVariable int id) {
+        log.debug("");
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        // filter 추가
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+//                .filterOutAllExcept("id", "userName", "joinDate", "ssn");
+                  .filterOutAllExcept("id", "userName", "joinDate", "ssn", "password");
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
+}
+```
+
+- **SimpleBeanPropertyFilter**
+  - 지정된 필드드만 **JSON**으로 변환, 알 수 없는 필드는 무시.
+- **MappingJacksonValue** 클래스를 사용하여 User 클래스를 Filter를 적용할 수 있는 타입으로 변경.
+- FilterProvider를 통해 @JsonFilter에서 지정한 id 값, 생성한 Filter를 매개변수로 하여 우리가 사용할 수 있는 필터로 변경.
+
+### 참고 자료
+
+- https://www.inflearn.com/course/spring-boot-restful-web-services/lecture/39102?tab=curriculum&volume=1.00&quality=1080
+- https://jy-beak.tistory.com/123?category=980784
